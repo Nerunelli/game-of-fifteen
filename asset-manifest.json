@@ -1,0 +1,13 @@
+{
+  "files": {
+    "main.css": "/game-of-fifteen/static/css/main.9e74ba43.css",
+    "main.js": "/game-of-fifteen/static/js/main.3838a84e.js",
+    "index.html": "/game-of-fifteen/index.html",
+    "main.9e74ba43.css.map": "/game-of-fifteen/static/css/main.9e74ba43.css.map",
+    "main.3838a84e.js.map": "/game-of-fifteen/static/js/main.3838a84e.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.9e74ba43.css",
+    "static/js/main.3838a84e.js"
+  ]
+}
