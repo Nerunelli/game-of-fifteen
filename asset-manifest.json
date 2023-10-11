@@ -1,7 +1,7 @@
 {
   "files": {
-    "main.css": "/game-of-fifteen/static/css/main.7e27e1aa.css",
-    "main.js": "/game-of-fifteen/static/js/main.ea915e35.js",
+    "main.css": "/game-of-fifteen/static/css/main.e78aa34d.css",
+    "main.js": "/game-of-fifteen/static/js/main.eb591c9c.js",
     "static/media/machine-clipped-10.png": "/game-of-fifteen/static/media/machine-clipped-10.f2af43b404562c1deb30.png",
     "static/media/machine-clipped-11.png": "/game-of-fifteen/static/media/machine-clipped-11.4ab4125cef25b6489722.png",
     "static/media/machine-clipped-4.png": "/game-of-fifteen/static/media/machine-clipped-4.78962d74d31e5b36b05d.png",
@@ -11,11 +11,11 @@
     "static/media/machine-clipped-1.png": "/game-of-fifteen/static/media/machine-clipped-1.90d90a86d94b2294f3fb.png",
     "static/media/machine-clipped-2.png": "/game-of-fifteen/static/media/machine-clipped-2.0c284be0bc524632c4c4.png",
     "index.html": "/game-of-fifteen/index.html",
-    "main.7e27e1aa.css.map": "/game-of-fifteen/static/css/main.7e27e1aa.css.map",
-    "main.ea915e35.js.map": "/game-of-fifteen/static/js/main.ea915e35.js.map"
+    "main.e78aa34d.css.map": "/game-of-fifteen/static/css/main.e78aa34d.css.map",
+    "main.eb591c9c.js.map": "/game-of-fifteen/static/js/main.eb591c9c.js.map"
   },
   "entrypoints": [
-    "static/css/main.7e27e1aa.css",
-    "static/js/main.ea915e35.js"
+    "static/css/main.e78aa34d.css",
+    "static/js/main.eb591c9c.js"
   ]
 }
