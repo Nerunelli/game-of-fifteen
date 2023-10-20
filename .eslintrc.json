@@ -24,13 +24,6 @@
 	"rules": {
 		"no-console": "warn",
 		"react/prop-types": "off",
-		// "block-spacing": "error",
-		// "no-trailing-spaces": "error",
-		// "arrow-spacing": "error",
-		// "comma-spacing": "error",
-		// "space-infix-ops": "error",
-		// "key-spacing": "error",
-		// "keyword-spacing": "error",
 		"indent": [
 			"error",
 			"tab"
