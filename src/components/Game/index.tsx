@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
+import { useCallback, useEffect, useRef, useState } from 'react';
 import { FIELD_SIZE } from '../../consts';
 import { Text } from '../Text';
 import { ICell, ICellPosition, IColors } from '../../models';
@@ -7,7 +7,6 @@ import {
 	findTargetCell,
 	isSamePosition,
 	isCorrectCoords,
-	findOrder,
 } from '../../utils';
 import { ShuffleButton } from '../ShuffleButton';
 import { Field } from '../Field';

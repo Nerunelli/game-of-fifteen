@@ -1,7 +1,6 @@
 import { TRANSFORM_DURATION } from '../../consts';
 import { ICell, ICellPosition, IColors } from '../../models';
 import { countDelay, isCorrectCoords } from '../../utils';
-import { Text } from '../Text';
 
 interface IProps {
 	el: ICell;
