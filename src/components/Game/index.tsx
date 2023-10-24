@@ -38,7 +38,6 @@ export const Game: React.FC<IProps> = ({ colors, shuffleCount = 100 }) => {
 	const [shuffleClicked, setShuffleClicked] = useState(false);
 	const [numberOfSolved, setNumberOfSolved] = useState(15);
 	const [gameSolved, setGameSolved] = useState(false);
-	const flipOrder = useMemo(() => Array.from(findOrder(new Set())), []);
 
 	for (let y = 0; y < FIELD_SIZE; y++) {
 		for (let x = 0; x < FIELD_SIZE; x++) {
@@ -138,7 +137,6 @@ export const Game: React.FC<IProps> = ({ colors, shuffleCount = 100 }) => {
 				emptyCells={emptyCells}
 				empty={empty}
 				gameSolved={gameSolved}
-				flipOrder={flipOrder}
 				colors={colors}
 				onCellClick={handleCellClick}
 			/>

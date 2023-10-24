@@ -2,13 +2,14 @@ import { Cell } from '../Cell';
 import { ICell, ICellPosition, IColors } from '../../models';
 import { CellContainer } from '../CellContainer';
 import { PictureCell } from '../PictureCell';
+import { useMemo } from 'react';
+import { findOrder } from '../../utils';
 
 interface IProps {
 	cells: ICell[];
 	emptyCells: ICellPosition[];
 	empty: ICellPosition;
 	gameSolved: boolean;
-	flipOrder: number[];
 	colors?: IColors;
 	onCellClick: (cell: ICell) => void;
 }
@@ -18,10 +19,11 @@ export const Field: React.FC<IProps> = ({
 	emptyCells,
 	empty,
 	gameSolved,
-	flipOrder,
 	colors,
 	onCellClick,
 }) => {
+	const flipOrder = useMemo(() => Array.from(findOrder(new Set())), []);
+
 	return (
 		<>
 			<div
