@@ -1,0 +1,18 @@
+# Build
+build
+node_modules
+
+# Environment
+.env*.local
+.idea
+.vscode
+.git
+.project
+.settings
+
+# Mac OS
+.DS_Store
+
+*.log
+
+.eslintcache
