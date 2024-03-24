@@ -1,67 +1,48 @@
 import { useCallback, useEffect, useRef, useState } from 'react';
 import { FIELD_SIZE } from '../../consts';
 import { Text } from '../Text';
-import { ICell, ICellPosition, IColors } from '../../models';
-import {
-	isMoveable,
-	findTargetCell,
-	isSamePosition,
-	isCorrectCoords,
-} from '../../utils';
+import { ICell, ICellPosition } from '../../types/cell';
+import { isMovable, isSamePosition } from '../../utils/positionHelpers';
 import { ShuffleButton } from '../ShuffleButton';
 import { Field } from '../Field';
+import { isCorrectCoords } from '../../utils/correctCellsHelpers';
+import { findTargetCell } from '../../utils/shuffleHelpers';
+import { IColors } from '../../types/colorSettings';
+import { prepareMatrix } from '../../utils/prepareMatrix';
 
 interface IProps {
 	colors?: IColors;
 	shuffleCount?: number;
 }
 
-const matrix: ICell[] = [];
-for (let y = 0; y < FIELD_SIZE; y++) {
-	for (let x = 0; x < FIELD_SIZE; x++) {
-		const number = x + FIELD_SIZE * y + 1;
-
-		matrix.push({
-			title: number !== 16 ? String(number) : '',
-			position: { x, y },
-		});
-	}
-}
-
 export const Game: React.FC<IProps> = ({ colors, shuffleCount = 100 }) => {
-	const [empty, setEmpty] = useState({ x: 3, y: 3 });
-	const [forbidden, setForbidden] = useState('');
-	const matrix: ICell[] = [];
-	const emptyCells: ICellPosition[] = [];
-	const moveCell = useRef<() => void>();
+	const [emptyCell, setEmptyCell] = useState({ x: 3, y: 3 });
+	const [isForbidden, setIsForbidden] = useState('');
 	const [shuffleClicked, setShuffleClicked] = useState(false);
 	const [numberOfSolved, setNumberOfSolved] = useState(15);
 	const [gameSolved, setGameSolved] = useState(false);
 
+	const emptyCells: ICellPosition[] = [];
+	const moveCell = useRef<() => void>();
+
 	for (let y = 0; y < FIELD_SIZE; y++) {
 		for (let x = 0; x < FIELD_SIZE; x++) {
-			const number = x + FIELD_SIZE * y + 1;
-
 			emptyCells.push({ x, y });
-			matrix.push({
-				title: number !== 16 ? String(number) : '',
-				position: { x, y },
-			});
 		}
 	}
-	const [cells, setCells] = useState([...matrix]);
+	const [cells, setCells] = useState(prepareMatrix());
 
 	const handleCellClick = useCallback(
 		(clicked: ICell) => {
-			if (!isMoveable(clicked.position, empty)) {
+			if (!isMovable(clicked.position, emptyCell)) {
 				return;
 			}
-			const newPosition = empty;
-			setEmpty(clicked.position);
+			const newPosition = emptyCell;
+			setEmptyCell(clicked.position);
 
 			setCells((prev) => {
 				const res = [...prev];
-				const index = Number(clicked.title) - 1;
+				const index = clicked.value! - 1;
 
 				res[index].position = newPosition;
 				return res;
@@ -73,29 +54,13 @@ export const Game: React.FC<IProps> = ({ colors, shuffleCount = 100 }) => {
 				setNumberOfSolved((prev) => prev - 1);
 			}
 		},
-		[cells, empty],
+		[emptyCell],
 	);
-
-	useEffect(() => {
-		moveCell.current = () => {
-			const target = findTargetCell(empty, forbidden);
-
-			setForbidden(target.forbidden);
-			setEmpty(target.position);
-
-			const number = cells.findIndex((el) =>
-				isSamePosition(el.position, target.position),
-			);
-
-			const cell = document.getElementById(String(number + 1));
-			cell?.click();
-		};
-	}, [empty, forbidden]);
 
 	const shuffle = useCallback(() => {
 		let counter = 0;
 
-		return (prevTimer?: NodeJS.Timeout) => {
+		return function shuf(prevTimer?: NodeJS.Timeout) {
 			if (moveCell.current) {
 				moveCell.current();
 			}
@@ -106,17 +71,30 @@ export const Game: React.FC<IProps> = ({ colors, shuffleCount = 100 }) => {
 
 			counter++;
 			if (counter < shuffleCount) {
-				const timer: NodeJS.Timeout = setTimeout(
-					() => handleShuffle(timer),
-					60,
-				);
+				const timer: NodeJS.Timeout = setTimeout(() => shuf(timer), 60);
 			} else {
 				counter = 0;
 			}
 		};
-	}, [moveCell, cells, shuffleCount]);
+	}, [moveCell, shuffleCount]);
 
-	const handleShuffle = useCallback(shuffle(), [shuffleCount]);
+	const handleShuffle = shuffle();
+
+	useEffect(() => {
+		moveCell.current = () => {
+			const target = findTargetCell(emptyCell, isForbidden);
+
+			setIsForbidden(target.forbidden);
+			setEmptyCell(target.position);
+
+			const number = cells.findIndex((el) =>
+				isSamePosition(el.position, target.position),
+			);
+
+			const cell = document.getElementById(String(number + 1));
+			cell?.click();
+		};
+	}, [cells, emptyCell, isForbidden]);
 
 	useEffect(() => {
 		if (shuffleClicked && numberOfSolved === 15) {
@@ -134,7 +112,7 @@ export const Game: React.FC<IProps> = ({ colors, shuffleCount = 100 }) => {
 			<Field
 				cells={cells}
 				emptyCells={emptyCells}
-				empty={empty}
+				empty={emptyCell}
 				gameSolved={gameSolved}
 				colors={colors}
 				onCellClick={handleCellClick}

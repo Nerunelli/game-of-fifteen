@@ -1,9 +1,10 @@
 import { Cell } from '../Cell';
-import { ICell, ICellPosition, IColors } from '../../models';
-import { CellContainer } from '../CellContainer';
+import { ICell, ICellPosition } from '../../types/cell';
+import { CellStroke } from '../CellStroke';
 import { PictureCell } from '../PictureCell';
 import { useMemo } from 'react';
-import { findOrder } from '../../utils';
+import { findFlipOrder } from '../../utils/flipCellHelpers';
+import { IColors } from '../../types/colorSettings';
 
 interface IProps {
 	cells: ICell[];
@@ -22,19 +23,16 @@ export const Field: React.FC<IProps> = ({
 	colors,
 	onCellClick,
 }) => {
-	const flipOrder = useMemo(() => Array.from(findOrder(new Set())), []);
+	const flipOrder = useMemo(() => Array.from(findFlipOrder(new Set())), []);
 
 	return (
 		<>
-			<div
-				style={{ background: colors?.field }}
-				className="z-0 h-80 w-80 rounded-field bg-field-bg p-field shadow-field"
-			>
-				<div className="relative h-full w-full">
+			<div className="z-0 size-80 rounded-field p-field">
+				<div className="relative size-full">
 					{emptyCells.map((el, i) => (
-						<CellContainer
+						<CellStroke
 							flipOrder={flipOrder[i]}
-							key={`${i}-empty`}
+							key={`empty-${i}`}
 							solved={gameSolved}
 							el={el}
 							empty={empty}
@@ -42,12 +40,12 @@ export const Field: React.FC<IProps> = ({
 					))}
 
 					{cells.map((el, i) =>
-						el.title ? (
+						el.value ? (
 							<Cell
 								flipOrder={flipOrder[i]}
 								solved={gameSolved}
 								colors={colors}
-								key={el.title}
+								key={`cell-${el.value}`}
 								el={el}
 								onClick={onCellClick}
 							/>
@@ -58,7 +56,7 @@ export const Field: React.FC<IProps> = ({
 						<PictureCell
 							solved={gameSolved}
 							flipOrder={flipOrder[i]}
-							key={`pic-${el.title}`}
+							key={`pic-${el.value}`}
 							el={el}
 						/>
 					))}
