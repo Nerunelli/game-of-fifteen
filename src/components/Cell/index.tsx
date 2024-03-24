@@ -1,6 +1,8 @@
 import { TRANSFORM_DURATION } from '../../consts';
-import { ICell, ICellPosition, IColors } from '../../models';
-import { countDelay, isCorrectCoords } from '../../utils';
+import { ICell, ICellPosition } from '../../types/cell';
+import { IColors } from '../../types/colorSettings';
+import { isCorrectCoords } from '../../utils/correctCellsHelpers';
+import { countDelay } from '../../utils/flipCellHelpers';
 
 interface IProps {
 	el: ICell;
@@ -36,22 +38,22 @@ export const Cell: React.FC<IProps> = ({
 				transformStyle: 'preserve-3d',
 				perspective: '200px',
 			}}
-			className="absolute z-50 inline-block h-1/4 w-1/4 p-cell"
+			className="absolute z-50 inline-block size-1/4 p-cell"
 		>
 			<button
-				className="h-full w-full rounded-cell bg-gradient-to-br from-dark-blue to-violet text-2xl font-semibold text-white shadow-wrong-cell"
+				className="size-full rounded-cell bg-gradient-to-br from-dark-blue to-violet text-2xl font-semibold text-white shadow-wrong-cell"
 				style={{
 					textShadow: '0 0 10px #fbc4ff',
-					background: `linear-gradient(-45deg, ${colors?.cellBottom} 0%, ${colors?.cellTop} 100%)`,
+					background: `linear-gradient(-45deg, ${colors?.cellBottomColor} 0%, ${colors?.cellTopColor} 100%)`,
 					boxShadow: isDone
-						? 'inset 0 0 10px 0px #FFFFFF'
-						: 'inset 0 0 10px 0px #000000',
+						? 'inset 0 0 10px 0px #fff'
+						: 'inset 0 0 10px 0px #000',
 				}}
 				onClick={handleClick}
-				id={el.title}
+				id={el.value?.toString()}
 				disabled={solved}
 			>
-				{el.title}
+				{el.value}
 			</button>
 		</div>
 	);

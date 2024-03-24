@@ -18,10 +18,13 @@
 	},
 	"plugins": [
 		"@typescript-eslint",
+		"eslint-plugin-tsdoc",
 		"react",
+		"react-hooks",
 		"import"
 	],
 	"rules": {
+		"tsdoc/syntax": "warn",
 		"no-console": "warn",
 		"react/prop-types": "off",
 		"indent": [
@@ -45,7 +48,9 @@
 		],
 		"react/jsx-uses-react": "off",
 		"react/react-in-jsx-scope": "off",
-		"import/no-unresolved": "warn"
+		"import/no-unresolved": "warn",
+		"react-hooks/rules-of-hooks": "error",
+    "react-hooks/exhaustive-deps": "warn"
 	},
 	"settings": {
 		"import/parsers": {

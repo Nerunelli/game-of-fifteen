@@ -19,7 +19,7 @@ interface IImages {
 	[a: string]: string;
 }
 
-export const images: IImages = {
+export const cellImages: IImages = {
 	1: pic1,
 	2: pic2,
 	3: pic3,

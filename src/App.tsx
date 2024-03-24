@@ -1,17 +1,23 @@
-import React, { useEffect, useState } from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 import { Game } from './components/Game';
-import { Container } from './components/Container';
-import { IColors } from './models';
+import { DebugContainer } from './components/DebugContainer';
+import { IColors } from './types/colorSettings';
 
-function App() {
-	const [develop, setDevelop] = useState(false);
+export const App = () => {
+	const [debugMode, setDebugMode] = useState(false);
+	const [shuffleCount, setShuffleCount] = useState<number | undefined>();
+	const [colors, setColors] = useState<IColors>({
+		backgroundColor: '#0E0227',
+		cellTopColor: '#12009a',
+		cellBottomColor: '#a606b2',
+	});
 
-	const handleKeyPress = (e: KeyboardEvent) => {
+	const handleKeyPress = useCallback((e: KeyboardEvent) => {
 		if ((e.ctrlKey || e.metaKey) && e.code === 'KeyD') {
 			e.preventDefault();
-			setDevelop((prev) => !prev);
+			setDebugMode((prev) => !prev);
 		}
-	};
+	}, []);
 
 	useEffect(() => {
 		document.addEventListener('keydown', handleKeyPress);
@@ -21,67 +27,20 @@ function App() {
 		};
 	}, [handleKeyPress]);
 
-	const [colors, setColors] = useState<IColors>({
-		background: '#250B5F',
-		field: '#0B0045',
-		cellTop: '#12009A',
-		cellBottom: '#A606B2',
-	});
-
-	const onChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-		setColors((prev) => {
-			return { ...prev, [e.target.id]: e.target.value };
-		});
-	};
-
-	const [shuffleCount, setShuffleCount] = useState<number | undefined>();
-
 	return (
-		<Container bg={colors.background}>
+		<div
+			style={{ background: colors.backgroundColor }}
+			className="flex h-screen w-screen flex-col items-center justify-center bg-container-bg"
+		>
 			<Game colors={colors} shuffleCount={shuffleCount} />
-			{develop && (
-				<div className="absolute left-0 top-0 p-10">
-					<div className="flex flex-col pb-6">
-						{Object.keys(colors).map((el: string) => {
-							return (
-								<div key={el} className="flex w-80 justify-between">
-									<span className="mr-3 text-xl font-semibold text-white">
-										{el}
-									</span>
-									<div className="relative">
-										<input
-											style={{ marginRight: '60px' }}
-											className="absolute right-9"
-											type="color"
-											id={el}
-											value={colors[el as keyof typeof colors]}
-											onChange={onChange}
-										/>
-										<span className="text-xl font-semibold text-white">
-											{colors[el as keyof typeof colors]}
-										</span>
-									</div>
-								</div>
-							);
-						})}
-					</div>
-					<span className="mr-3 text-xl font-semibold text-white">
-						shuffle count
-					</span>
-					<input
-						value={shuffleCount}
-						onChange={(e) =>
-							setShuffleCount(
-								!isNaN(Number(e.target.value))
-									? Number(e.target.value)
-									: undefined,
-							)
-						}
-					/>
-				</div>
+			{debugMode && (
+				<DebugContainer
+					shuffleCount={shuffleCount}
+					colors={colors}
+					setShuffleCount={setShuffleCount}
+					setColors={setColors}
+				/>
 			)}
-		</Container>
+		</div>
 	);
-}
-
-export default App;
+};

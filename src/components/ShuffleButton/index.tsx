@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import cn from 'classnames';
 
 interface IProps {
 	onClick: () => void;
@@ -10,8 +11,10 @@ export const ShuffleButton: React.FC<IProps> = ({ onClick, clicked }) => {
 
 	return (
 		<button
-			// style={{ background: colors.field }}
-			className="rounded-md border-01 border-solid border-light-violet px-10 py-4 text-xl font-semibold tracking-button text-blue shadow-button hover:border-0 hover:bg-blue hover:bg-gradient-to-br hover:text-black hover:shadow-button-hover"
+			className={cn(
+				'rounded-md border-01 border-solid border-light-violet px-10 py-4 text-xl font-semibold tracking-button text-blue shadow-button',
+				'hover:border-0 hover:bg-blue hover:bg-gradient-to-br hover:text-black hover:shadow-button-hover',
+			)}
 			style={{
 				textShadow: hovered ? 'none' : '0 0 20px #68edff',
 				opacity: clicked ? '0%' : undefined,

@@ -1,7 +1,7 @@
 import { TRANSFORM_DURATION } from '../../consts';
-import { images } from '../../images/images';
-import { ICell } from '../../models';
-import { countDelay } from '../../utils';
+import { cellImages } from '../../images/cellImages';
+import { ICell } from '../../types/cell';
+import { countDelay } from '../../utils/flipCellHelpers';
 
 interface IProps {
 	el: ICell;
@@ -22,8 +22,8 @@ export const PictureCell: React.FC<IProps> = ({ el, solved, flipOrder }) => {
 				perspective: '1400px',
 				transform: solved ? 'rotateY(360deg)' : 'rotateY(270deg)',
 			}}
-			className={'absolute z-50 inline-block h-1/4 w-1/4'}
-			src={images[el.title || '16']}
+			className={'absolute z-50 inline-block size-1/4'}
+			src={cellImages[el.value || '16']}
 			alt=""
 		/>
 	);

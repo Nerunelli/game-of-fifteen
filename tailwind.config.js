@@ -4,7 +4,7 @@ module.exports = {
 	theme: {
 		extend: {
 			backgroundColor: {
-				'container-bg': '#250B5F',
+				'container-bg': '#0E0227',
 				'field-bg': '#0B0045',
 			},
 			colors: {
@@ -22,12 +22,15 @@ module.exports = {
 			height: {
 				128: '26rem',
 			},
+			margin: {
+				colorInput: '60px',
+			},
 			padding: {
 				cell: '0.305rem',
 				field: '0.7rem',
 			},
 			boxShadow: {
-				field: '0 0 20px -8px #FFFFFF',
+				field: '0 0 20px -8px #AD6DF1',
 				'wrong-cell': 'inset 0 0 10px 0px #000000',
 				'done-cell': 'inset 0 0 10px 0px #FFFFFF',
 				'empty-cell': '0 0 10px 0px #FF0000, inset 0 0 20px 0px #C900BA',
@@ -41,9 +44,9 @@ module.exports = {
 				'01': '0.1px',
 			},
 			borderRadius: {
-				'field': '0.75rem',
-				'cell': '0.35rem',
-			}
+				field: '0.75rem',
+				cell: '0.35rem',
+			},
 		},
 	},
 	plugins: [],
